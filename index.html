@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <link rel="icon" href="icona.png" type="image/png">
+<link rel="apple-touch-icon" href="icona.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolatore Lunghezza Carta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="number"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="button"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="button"]:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Calcolatore Lunghezza Carta/PVC</h2>
+        <label for="diametroEsterno">Diametro esterno (mm):</label>
+        <input type="number" id="diametroEsterno" step="0.1" placeholder="Es. 500">
+
+        <label for="diametroInterno">Diametro interno (mm):</label>
+        <input type="number" id="diametroInterno" step="0.1" placeholder="Es. 90">
+
+        <label for="spessore">Spessore della carta (mm):</label>
+        <input type="number" id="spessore" step="0.01" placeholder="Es. 0.045">
+
+        <input type="button" value="Calcola Lunghezza" onclick="calcolaLunghezza()">
+
+        <div class="result" id="risultato"></div>
+    </div>
+
+    <script>
+        function calcolaLunghezza() {
+            var diametroEsterno = parseFloat(document.getElementById('diametroEsterno').value);
+            var diametroInterno = parseFloat(document.getElementById('diametroInterno').value);
+            var spessore = parseFloat(document.getElementById('spessore').value);
+
+            if (isNaN(diametroEsterno) || isNaN(diametroInterno) || isNaN(spessore) || diametroEsterno <= diametroInterno) {
+                document.getElementById('risultato').innerText = "Inserisci valori validi.";
+                return;
+            }
+
+            // Converti i valori da mm a metri
+            diametroEsterno /= 1000;
+            diametroInterno /= 1000;
+            spessore /= 1000;
+
+            var lunghezza = (Math.PI * (Math.pow(diametroEsterno, 2) - Math.pow(diametroInterno, 2))) / (4 * spessore);
+            document.getElementById('risultato').innerText = "La lunghezza della carta è: " + lunghezza.toFixed(2) + " metri";
+        }
+    </script>
+
+</body>
+</html>
